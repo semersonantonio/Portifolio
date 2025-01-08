@@ -1,32 +1,16 @@
-# Este projeto utiliza dados de uma rede de sensores IoT para criar modelos preditivos
-# de consumo de energia de eletrodomésticos. Os dados foram coletados durante um
-# período de cinco meses e incluem medições de temperatura, umidade e consumo de
-# energia, além de informações meteorológicas da estação de um aeroporto próximo.
-# O conjunto de dados foi processado, incluindo a filtragem de variáveis não preditivas
-# e o tratamento de valores ausentes.
+# O objetivo deste projeto foi é utilizar os dados de uma rede de sensores IoT para criar um modelo preditivos
+# para o consumo de energia de eletrodomésticos. Os dados foram coletados durante um período de cinco meses 
+# e incluem medições de temperatura, umidade e consumo de energia, além de informações meteorológicas da 
+# estação de um aeroporto próximo.
 
-# O processo de análise e modelagem envolveu várias etapas. Inicialmente, foi realizada
-# a análise exploratória dos dados, incluindo a visualização da distribuição do consumo
-# de energia e a análise de correlação entre as variáveis. A filtragem das variáveis
-# irrelevantes foi feita, excluindo colunas como data e variáveis aleatórias. Em seguida,
-# os valores ausentes foram substituídos pela mediana (para variáveis numéricas) ou moda
-# (para variáveis categóricas).
-
-# Para a construção do modelo preditivo, foram treinados dois algoritmos de aprendizado
-# de máquina: SVM (Máquinas de Vetores de Suporte) e XGBoost. Ambos os modelos foram ajustados
-# utilizando validação cruzada para otimizar seus parâmetros. A importância das variáveis foi
-# analisada com Random Forest, e as 10 variáveis mais relevantes foram selecionadas para a
-# modelagem final.
-
-# As métricas de desempenho (MAE, RMSE, R², MAPE, MedAE e RSE) foram calculadas para ambos os modelos,
+# As métricas de desempenho (MAE, RMSE, R², MAPE, MedAE e RSE) foram calculadas para os dois modelos criados,
 # e o modelo com o menor erro absoluto médio (MAE) foi selecionado como o melhor. No final, as previsões
-# do modelo escolhido foram aplicadas em um conjunto de teste, e os resultados foram exportados para um
-# arquivo CSV.
+# do modelo escolhido foram aplicadas em um conjunto de teste, e os resultados foram exportados para um arquivo CSV.
 
 # Este processo demonstrou a eficácia da combinação de técnicas de aprendizado de máquina e IoT
 # na previsão de consumo de energia, com a possibilidade de otimizar o uso de energia com base
 # em variáveis ambientais e de operação.
-# ____________________________________________________________________
+
 
 # Imports
 library(dplyr)
@@ -64,7 +48,7 @@ View(correlacao)
 corrplot(correlacao, method = "color", type = "upper", tl.cex = 0.7)
 
 
-# Pré-Processamento dos Dados
+### Pré-Processamento dos Dados
 
 # Filtrando as variáveis irrelevantes ou não preditivas
 dados_filtrados <- dados %>%
@@ -111,7 +95,8 @@ ggplot(importancia, aes(x = reorder(Variable, Overall), y = Overall)) +
   labs(title = "Importância das Variáveis (Random Forest)", x = "Variáveis", y = "Importância")
 
 
-# Treinando os modelos com validação cruzada
+### Treinando os modelos com validação cruzada
+
 # Configuração para validação cruzada
 controle <- trainControl(method = "cv", number = 5)
 
@@ -146,7 +131,7 @@ modelo_xgb <- xgboost(
 )
 
 
-# Avaliando os modelos no conjunto de validação
+### Avaliando os modelos no conjunto de validação
 
 # Predições no conjunto de validação
 # SVM
